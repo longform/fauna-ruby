@@ -21,7 +21,7 @@ module Fauna
         res
       when 400
         json = JSON.parse(res)
-        raise BadRequest.new(json['error'], json['param_errors'])
+        raise BadRequest.new(json['error'] + ": " + res)
       when 401
         raise Unauthorized, JSON.parse(res)['error']
       when 404
