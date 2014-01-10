@@ -48,6 +48,7 @@ module Fauna
     def deleted; struct['deleted'] end
     def constraints; struct['constraints'] ||= {} end
     def data; struct['data'] ||= {} end
+    def permissions; struct['permissions'] ||= {} end
     def references; struct['references'] ||= {} end
 
     def events(pagination = {})
