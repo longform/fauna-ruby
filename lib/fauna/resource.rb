@@ -126,7 +126,7 @@ module Fauna
     end
 
     def post
-      Fauna::Client.post("#{fauna_class}", struct)
+      Fauna::Client.post("classes/#{fauna_class}", struct)
     end
 
     def getter_method(method)
