@@ -1,6 +1,6 @@
 module Fauna
   class Client
-    def transaction
+    def self.transaction
       # push context?
       t = Fauna::Transaction.new
       yield t if block_given?
