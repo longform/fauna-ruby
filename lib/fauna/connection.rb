@@ -74,6 +74,10 @@ module Fauna
       nil
     end
 
+    def post_transaction(data = {})
+      parse(*execute(:post, 'transactions', data))
+    end
+
     private
 
     def parse(headers, body)
