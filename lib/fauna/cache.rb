@@ -1,6 +1,6 @@
 module Fauna
-  class NoContextError < StandardError
-  end
+  class NoContextError < StandardError; end
+  class InvalidTransaction < StandardError; end
 
   class Cache
     attr_reader :connection
@@ -50,6 +50,23 @@ module Fauna
       @connection.delete(ref, data)
       @cache.delete(ref)
       nil
+    end
+
+    def post_transaction(data)
+      actions = data.fetch(:actions, [])
+      raise(InvalidTransaction, "Transaction must include at least one action") unless actions.length > 0
+
+      res = @connection.post_transaction(data)
+
+      if actions.last[:method] == 'DELETE'
+        @cache.delete(actions.last[:path])
+        nil
+      else
+        if res['resource'] # the res returned by @connection should always be a hash if the method isn't DELETE 
+          update_cache(actions.last[:path], res) # but how to deal with transaction vars ($0)
+          res['resource']
+        end
+      end
     end
 
     private

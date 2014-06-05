@@ -39,6 +39,10 @@ module Fauna
       connection.delete(ref, data)
     end
 
+    def self.post_transaction(data)
+      connection.post_transaction(data)
+    end
+
     def self.connection
       stack.last or raise NoContextError, "You must be within a Fauna::Client.context block to perform operations."
     end
