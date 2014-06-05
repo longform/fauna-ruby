@@ -39,7 +39,7 @@ module Fauna
     end
 
     def execute
-      Fauna::Client.post('transaction', { :actions => actions }) # may need some work in Fauna::Cache
+      Fauna::Client.post('transaction', { :actions => @actions }) # may need some work in Fauna::Cache
     end
   end
 end
