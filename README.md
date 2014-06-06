@@ -120,6 +120,68 @@ pig = Fauna::Resource.find 'classes/pigs/42471470493859841'
 # do something with this pig...
 ````
 
+## Transactions
+
+Transactions can be executed by nesting API calls inside a transaction block. Transactions
+bypass the client cache and post directly to the connection. Transaction variables are escaped
+before the transaction is executed.
+
+Actions can include `:data`, `:constraints`, `:references`, and `:permissions` hashes.
+
+Variables are allowed per the API documentation. Both forms (`$variable` and `${variable}`)
+may be used the constraints and references. In the `:data` hash, only the `${variable}` form
+is allowed. All other dollar signs will be escaped. Parameter values may be supplied as
+arguments to the `execute` method.
+
+Action methods return their index in the transaction list, which can be used to build complex
+sets of references out of numeric variables.
+
+```
+create_spell_transaction = Fauna::Transaction.new do |t|
+  t.post("classes/spells",
+    :data => {
+      "blessing" : "$blessing",
+      "strength" : "$strength",
+      "text" : "Draw Drynwyn only of thou royal blood",
+      "transferable" : true,
+      "transfer_price": "$5 in ${transfer_currency}"
+    },
+    :permissions : {
+      "read" : "users/self",
+      "write" : "users/self"
+    }
+  )
+  t.put("users/self/sets/spellbook/$0")
+  t.get("$0")
+end
+
+spell = create_spell_transaction.execute("blessing" => true, "strength" => 100, "transfer_currency" => "Gold Coins")
+```
+
+Transaction blocks can also be executed directly, without instantiating a
+transaction object.
+
+```
+Fauna::Transaction.execute do |t|
+  t.post("classes/spells",
+    :data => {
+      "blessing" : true,
+      "strength" : 100,
+      "text" : "Draw Drynwyn only of thou royal blood"
+      "transferable" : true,
+      "transfer_price" : "$5 in Gold Coins"
+    },
+    :permissions : {
+      "read" : "users/self",
+      "write" : "users/self"
+    }
+  )
+  t.put("users/self/sets/spellbook/$0")
+  t.get("$0")
+end
+
+```
+
 ## Rails Usage
 
 Fauna provides a Rails helper that sets up a default context in
