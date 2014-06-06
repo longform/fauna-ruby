@@ -57,24 +57,10 @@ module Fauna
     # Escape dollar signs that would ordinarily be interpreted as transaction
     # variables.
     #
-    # Per the API documention:
-    #
-    #   "A variable name begins with a $. Any characters a-z, A-Z, 0-9, -, and _
-    #   immediately following the $ comprise the name. If the $ is followed by
-    #   a {, then the name ends at the next }. The $ literal can be escaped as $$.
-    #
-    #   Available variables are the members of the params object, and the action
-    #   indexes, beginning from $0, which return the resource member of each
-    #   action result.
-    #
-    #   If a variable refers to a JSON object, it can be traversed with dot
-    #   notation, for example, ${0.ref}, or ${0.data.name}."
-    #
     # The default mode leaves ${variables} intact, but escapes $variables.
     # This allows values containing normal dollar signs to be used.
     #
-    # Setting the mode to :strict will escape _all_ dollar signs, should the
-    # need arise.
+    # mode = :strict escapes _all_ dollar signs, should the need arise.
 
     def self.escape(data, mode = :default)
       if data.is_a? Hash
