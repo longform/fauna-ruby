@@ -109,6 +109,9 @@ module Fauna
         body.keys.each do |key|
           case key.to_sym
           when :data
+            # TODO: add some kind of way to indicate that the data has already been escaped
+            # (probably before being added via the initializer). Maybe a DataHash delegator
+            # with an 'escape' method and an :escaped accessor
             sanitized_body[key.to_sym] = Fauna::Transaction.escape(body[key])
           when :constraints, :references, :permissions
             sanitized_body[key.to_sym] = body[key]
