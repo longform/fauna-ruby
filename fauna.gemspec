@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fauna, Inc."]
-  s.cert_chain = ["/Users/eweaver/fauna/fauna-ruby/fauna-ruby.pem"]
+  #s.cert_chain = ["/Users/eweaver/fauna/fauna-ruby/fauna-ruby.pem"]
   s.date = "2014-05-15"
   s.description = "Ruby client for the Fauna distributed database."
   s.email = ""
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = "fauna"
   s.rubygems_version = "2.1.10"
-  s.signing_key = "/Users/eweaver/cloudburst/configuration/gem_certificates/gem-private_key.pem"
+  #s.signing_key = "/Users/eweaver/cloudburst/configuration/gem_certificates/gem-private_key.pem"
   s.summary = "Ruby client for the Fauna distributed database."
   s.test_files = ["test/class_test.rb", "test/client_test.rb", "test/connection_test.rb", "test/database_test.rb", "test/query_test.rb", "test/readme_test.rb", "test/set_test.rb", "test/test_helper.rb"]
 
